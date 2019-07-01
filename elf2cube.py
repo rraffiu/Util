@@ -1,8 +1,5 @@
 from numpy import *
-from scipy.interpolate import interp1d, make_interp_spline
-import matplotlib.pyplot as plt
 from ase.calculators.vasp import VaspChargeDensity
-from ase.units import Ha,Bohr
 import sys
 
 # Reads ELFCAR and converts it into 'cube' format.
@@ -16,8 +13,8 @@ ELF_file = sys.argv[1]
 
 a = VaspChargeDensity(ELF_file)
 
-# ix is the quickest index while iz is the slowest index
-# rho(ix:nx,iy:ny,iz:nz)
+# In vasp ix is the quickest index while iz is the slowest index
+# rho(ix:nx,iy:ny,iz:nz), while cube format it is opposite. 
 
 elf_by_V = a.chg[0]
 
@@ -41,9 +38,9 @@ for i in range(n_atoms):
     n_atomic = a.atoms[0].get_atomic_numbers()[i]
     p_atom = a.atoms[0].get_positions()[i]
     f_elf.write(('{:4d}  {:3f}'+'   {: .6f}'*3+'\n').format(n_atomic,n_atomic,p_atom[0],p_atom[1],p_atom[2]))
-for z in range(nxyz[2]):
+for x in range(nxyz[0]):
     for y in range(nxyz[1]):
-        for x in range(nxyz[0]):
+        for z in range(nxyz[2]):
             f_elf.write((' {: .6f}').format(elf[x,y,z]))
             if (index%6) == 0:
                 f_elf.write('\n')
