@@ -14,10 +14,10 @@ def write_sys(fileobj, atoms):
     atoms: Atoms object
         Atoms object specifying the atomic configuration.
     """
-    fileobj.write('set cell  ')
+    fileobj.write('set cell')
     for i in range(3):
         d = atoms.cell[i]/Bohr
-        fileobj.write(('{:6f}  {:6f}  {:6f}').format(*d))
+        fileobj.write((' {:6f}  {:6f}  {:6f}').format(*d))
     fileobj.write('  bohr\n')
 
     ch_sym = atoms.get_chemical_symbols()
