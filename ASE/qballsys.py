@@ -29,5 +29,6 @@ def write_sys(fileobj, atoms):
         fileobj.write(('species {}{} pseudopotenitalfile\n').format(s,an[i]))
     i = 1
     for S, Z, (x, y, z) in zip(ch_sym, atm_nm, a_pos):
-        fileobj.write(('atom {0:5} {1:5}  {2:12.6f}{3:12.6f}{4:12.6f} bohr\n').format(S+str(i),S+str(Z), x, y, z))
+        fileobj.write(('atom {0:5} {1:5}  {2:12.6f}{3:12.6f}{4:12.6f} bohr\n').\
+        format(S+str(i),S+str(Z), x/Bohr, y/Bohr, z/Bohr))
         i +=1
