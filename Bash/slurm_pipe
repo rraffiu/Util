@@ -1,0 +1,14 @@
+#!/bin/bash
+# The following script creats pipe line of dependent jobs
+# meaning jobs will run in a sequence.
+
+ T=300K
+ sed s/iter/1/g Aui.sbatch > Au-$T.sbatch
+ jobid=$(sbatch --parsable Au-$T.sbatch)
+ echo $jobid
+ for i in {2..14}
+     do
+         sed s/iter/$i/g Aui.sbatch > Au-$T.sbatch
+         jobid=$(sbatch --parsable -d $jobid Au-$T.sbatch)
+         echo $jobid
+     done

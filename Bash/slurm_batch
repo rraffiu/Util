@@ -1,0 +1,23 @@
+#!/bin/bash
+# A typical slurm script for a batch job
+ #SBATCH -N   6
+ ##SBATCH --ntasks-per-node=#
+ ##SBATCH --tasks-per-node=#
+ ##SBATCH --qos=expedite
+ #SBATCH -p pbatch
+ #SBATCH -A hedeos
+ #SBATCH -t 12:00:00
+ a=iter
+
+ srun -n 216 /usr/gapps/qsg/VASP/bin/vasp_dev_quartz5_5.4.4_patched
+ touch done.$a.$SLURM_JOB_ID
+ cp CONTCAR POSCAR
+ mv CONTCAR contcar.${a}
+ mv OUTCAR outcar.${a}
+ mv OSZICAR oszicar.${a}
+ mv XDATCAR xdatcar.${a}
+ rm -f DOSCAR
+ rm -f CHG
+ rm -f CHGCAR
+ rm -f PCDAT
+ rm -f EIGENVAL
