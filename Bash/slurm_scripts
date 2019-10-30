@@ -1,0 +1,7 @@
+# Useful snippets of script to automate job submssion, 
+# cancelling, or updating attibutes.
+
+# The following script gets job ID for all jobs 'Au' in the 
+# job name and parses to scancel to cancel all such jobs.
+
+scancel $(squeue -u ullah1 | grep Au | awk '{print $1}')
