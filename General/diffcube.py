@@ -54,13 +54,13 @@ def read_cube(fname):
 
     Data = np.array([ float(s) for s in f.read().split() ]).reshape(Nxyz)
     f.close()
-    return cube(Comment=Comment,Natoms=Natoms,Origin=Origin,Nxyz=Nxyz,Voxel=Voxel, \
+    return cube(Natoms=Natoms,Origin=Origin,Nxyz=Nxyz,Voxel=Voxel, \
                 Zatoms=Zatoms, Matoms=Matoms, Patoms=Patoms, Data=Data)
 
 def write_cube(fname, d):
     f = open(fname, 'w')
     if d.Comment is None:
-        f.write('Cube file written with io_cube on ' + time.strftime('%c'))
+        f.write('Cube file written on ' + time.strftime('%c'))
         f.write('\nOUTER LOOP: X, MIDDLE LOOP: Y, INNER LOOP: Z\n')
     else:
         f.write(d.Comment[0])
