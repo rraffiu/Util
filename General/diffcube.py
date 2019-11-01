@@ -36,11 +36,11 @@ def read_cube(fname):
     line = f.readline().split()
     Natoms = int(line[0])
     Origin = np.array([ float(x) for x in line[1::] ])
-    Nxyz = []
+    Nxyz = np.empty(3,int)
     Voxel = np.empty((3, 3))
     for i in range(3):
         n, x, y, z = [ float(s) for s in f.readline().split() ]
-        Nxyz.append(int(n))
+        Nxyz[i] = int(n)
         Voxel[i] = np.array([x, y, z])
 
     Zatoms = np.empty(Natoms, int)
@@ -51,8 +51,8 @@ def read_cube(fname):
         Zatoms[i] = int(line[0])
         Matoms[i] = float(line[1])
         Patoms[i] = [ float(s) for s in line[2:] ]
-
-    Data = np.array([ float(s) for s in f.read().split() ]).reshape(Nxyz)
+    shape = abs(Nxyz)
+    Data = np.array([ float(s) for s in f.read().split() ]).reshape(shape)
     f.close()
     return cube(Natoms=Natoms,Origin=Origin,Nxyz=Nxyz,Voxel=Voxel, \
                 Zatoms=Zatoms, Matoms=Matoms, Patoms=Patoms, Data=Data)
@@ -69,9 +69,8 @@ def write_cube(fname, d):
         d.Origin = np.zeros(3)
     f.write(('{0:5}{1:12.6f}{2:12.6f}{3:12.6f}\n').format(d.Natoms, *d.Origin))
     for i in range(3):
-        n = d.Data.shape[i]
         r = d.Voxel[i]
-        f.write(('{0:5}{1:12.6f}{2:12.6f}{3:12.6f}\n').format(n, *r))
+        f.write(('{0:5}{1:12.6f}{2:12.6f}{3:12.6f}\n').format(d.Nxyz[i], *r))
 
     p = d.Patoms
     n = d.Zatoms
@@ -79,9 +78,9 @@ def write_cube(fname, d):
     for Z, M, (x, y, z) in zip(n, m, p):
         f.write(('{0:5}{1:12.6f}{2:12.6f}{3:12.6f}{4:12.6f}\n').format(Z, M, x, y, z))
     index = 1
-    for x in range(d.Nxyz[0]):
-        for y in range(d.Nxyz[1]):
-            for z in range(d.Nxyz[2]):
+    for x in range(abs(d.Nxyz[0])):
+        for y in range(abs(d.Nxyz[1])):
+            for z in range(abs(d.Nxyz[2])):
                 f.write((' {: .6E}').format(d.Data[x,y,z]))
                 if (index%6) == 0:
                     f.write('\n')
