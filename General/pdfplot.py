@@ -1,6 +1,7 @@
 
  from __future__ import print_function
  import sys
+ import ntpath
  import matplotlib
  import matplotlib.pyplot as plt
  import numpy as np
@@ -25,5 +26,7 @@
  ax.set_xlabel(r'\bf{T (K)}',fontsize=16)
  ax.set_ylabel(r'\bf{MSD} (\AA$^2$)',fontsize=16)
 
- fig.savefig("msd-P44GPa.pdf")
+ head, tail = ntpath.split(fname) # split path from file name
+ fsave = tail.rsplit( ".", 1 )[ 0 ] # remove extention from file name
+ fig.savefig(fsave+".pdf")
  plt.show(block=False)
