@@ -3,7 +3,7 @@
 Calculate and remove center of mass
 displacement for an MD trajectory.
 Usually needed when zero frequency component in VDOS indicates
-if there is a drift present.
+if there is a drift present. Uses first frame as a reference. 
 """
 
 from __future__ import print_function
@@ -11,13 +11,14 @@ import numpy as np
 import sys
 import pandas as pd
 
-# Reads merged unwrapped xyz file
+# Reads merged unwrapped xyz file. 
 #
 # Run as
 #
 # python comdisp.py <unwrapped_merge.xyz>
 #
 # the output is written to xdatcar_cm_removed.xyz
+# the elements.csv file should be present in the working directory.
 
 fname_xyz = sys.argv[1]
 el_dict = {}
