@@ -25,7 +25,7 @@ el_dict = {}
 df = pd.read_csv('elements.csv',index_col=2)
 # Read in the file to process
 f_in = open(fname_xyz,'r')
-f_out = open('test.xyz','w')
+f_out = open('xdatcar_cm_removed.xyz','w')
 # Build dictionary of unique elements with atomic masses
 # from the first frame.
 line = f_in.readline().split()
