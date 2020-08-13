@@ -23,7 +23,7 @@ el_dict = {}
 df = pd.read_csv('elements.csv',index_col=2)
 # Read in the file to process
 f_in = open(fname_xyz,'r')
-f_out = open('test.xyz','w')
+f_out = open('xdatcar_cm_removed.xyz','w')
 # Build dictionary of unique elements with atomic masses
 # from the first frame.
 line = f_in.readline().split()
@@ -80,7 +80,7 @@ while True:
         y = coord[j][2] - (rcm_current[1] - rcm_past[1])
         z = coord[j][3] - (rcm_current[2] - rcm_past[2])
         el = coord[j][0]
-        f_out.write(('{0:4}{1:14.8f}{2:14.8f}{3:14.8f}\n').format(el, x, y, z))
+        f_out.write(('{0:4} {1:14.8f} {2:14.8f} {3:14.8f}\n').format(el, x, y, z))
         atm = el_dict.get(el,"")
         x_frame += atm*x
         y_frame += atm*y
