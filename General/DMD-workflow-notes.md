@@ -1,10 +1,20 @@
 # How to reproduce real time DMD pipeline from scratch?
 ## JDFTx
-[JDFTx](https://jdftx.org) is the first principles code that is used to do SCF, phonon, and wanier calculations before running 
-the DMD calculations. The JDFTx source code is available from [github](https://github.com/shankar1729/jdftx/tags).
-Unzip the code after downloading and change to the main directory, ```/home/YOUR_USERNAME/jdftx-1.7.0```.
-From inside the main directory if you issue command ```ls```, you will see something very similar to the following:
-```Dockerfile  fluid1D  generate_tarball.sh  jdftx```. Here you can issue the command, ``` mkdir build```, to create the build directory 
+[JDFTx](https://jdftx.org) is the first principles code that is used to do SCF, phonon, and wannier calculations before running 
+the DMD calculations. The JDFTx source code is available from [github](https://github.com/shankar1729/jdftx/tags). You can download 
+it to directly to the cluster, for example, the following command,
+   
+```wget https://github.com/shankar1729/jdftx/archive/refs/tags/v1.7.0.tar.gz```
+  
+will download the version 1.7 of the code. The tar ball can be unarchived and decompressed using the following command, 
+
+```tar -xvzpf v1.7.0.tar.gz```. 
+
+Once uziped change to the main directory, ```/home/PATH_TO_CODE/jdftx-1.7.0```, replace PATH_TO_CODE with actual path relative to your home directory.
+From inside the main directory if you issue command ```ls```, you will see something very similar to the following:   
+```Dockerfile  fluid1D  generate_tarball.sh  jdftx```.   
+
+Here you can issue the command, ```mkdir build```, to create the build directory 
 where the compiled code or executables would be saved. Now using command ```cd build``` change to the build directory. Inside the build directory
 using a text editor of your choice create a text file (```make.sh``` for example, name is really not important) and save the following script in it. 
 
@@ -62,4 +72,29 @@ however, is not usually available on most platforms and you may need to build it
 
 Although a basic compilation can be done without some of the optional libraries but the DMD calculations are computationally expensive and would 
 need an optimally customized build. The above script does just that. Also these are condensed instructions to get one started quickly. For comprehensive
-information on how to build a fully customized JDFTx code please consult the [JDFTx](https://jdftx.org/Compiling.html) documentation from the developers. 
+information on how to build a fully customized JDFTx code please consult the [JDFTx](https://jdftx.org/Compiling.html) documentation from the developers.
+
+**Note:** For DMD calculations a separate code FynWann is also needed. FynWann uses JDFTx as a library and would give a compile time error if original JDFTx is not
+compiled with the profiling option enabled, ```EnableProfiling=yes```.
+
+### Building Libxc
+Libxc is a library of exchange-correlation functionals for density functional theory. You can get the library from [Gitlab](https://gitlab.com/libxc/libxc/-/releases), for example, using the ```wget``` command from within the cluster;   
+```wget https://gitlab.com/libxc/libxc/-/archive/6.0.0/libxc-6.0.0.tar.gz```.   
+Next decompress it with,    
+```tar -xvfz libxc-6.0.0.tar.gz```.
+After that change to the main directory ```/PATH_TO_LIBRARY/libxc-6.0.0```. If you do not see the ```configure``` file in the main directory, you can create one by issuing:   
+
+```autoreconf -i```.
+
+After that you can issue the following commands in order to build the directroy:
+
+```
+CFLAGS="$CFLAGS -std=gnu99" ./configure --enable-shared --prefix="/PATH_TO_LIBRARY/libxc-6.0.0"
+make
+make check
+make install
+```   
+**Note 1:** The libxc has some code which requires to be compiled with C99 standard, that is why without the compiler flag ```-std=gnu99``` libxc would not compile.   
+**Note 2:** JDFTx is built both as an executable and a library (shared object). That is why it is required that libxc is built as a shared object as well otherwise you will have problem compiling JDFTx with libxc. That is why the configure option ```--enable-shared``` is very important.  
+
+
