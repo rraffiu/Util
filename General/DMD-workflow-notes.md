@@ -97,4 +97,31 @@ make install
 **Note 1:** The libxc has some code which requires to be compiled with C99 standard, that is why without the compiler flag ```-std=gnu99``` libxc would not compile.   
 **Note 2:** JDFTx is built both as an executable and a library (shared object). That is why it is required that libxc is built as a shared object as well otherwise you will have problem compiling JDFTx with libxc. That is why the configure option ```--enable-shared``` is very important.  
 
+### FeynWann
+
+FeynWann is another code which works with JDFTx (and needs compiled JDFTx to compile) to perform important energy calculations and inialiazations for
+the DMD calculations. The code is not publically available yet. If you are working on the project you will have private access to it. Download the code and save it at the same location where your JDFTx ```build``` direcotry is. Make a new directory, say, ```build-FeynWann```, and change to it. Inside this directroy save the following script to a file ```make-FeynWann.sh```. 
+
+```cmake
+#!/bin/bash
+# for building FeynWann on lux
+module load openmpi/gcc/64/1.10.7
+
+CC=mpicc CXX=mpicxx cmake \
+ -D JDFTX_BUILD="../build" \
+ -D JDFTX_SRC="../jdftx" \
+ -D ForceFFTW=yes \
+ -D FFTW3_PATH="/PATH_TO_LIBRARY/fftw-3.3.8" \
+ -D EnableMKL=yes \
+ -D MKL_PATH="/PATH_TO_MKL/mkl" \
+ -D EnableScaLAPACK=yes \
+ -D GSL_PATH="/PATH_TO_LIBRARY/gsl/" \
+ -D EnablePETSc=yes \
+ -D PETSC_PATH="/PATH_TO_LIBRARY/petsc-3.18.4-build" \
+ -D MPISafeWrite=no \
+../FeynWann
+
+make -j4
+```
+
 
