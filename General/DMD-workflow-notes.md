@@ -16,7 +16,7 @@ From inside the main directory if you issue command ```ls```, you will see somet
 
 Here you can issue the command, ```mkdir build```, to create the build directory 
 where the compiled code or executables would be saved. Now using command ```cd build``` change to the build directory. Inside the build directory
-using a text editor of your choice create a text file (```make.sh``` for example, name is really not important) and save the following script in it. 
+using a text editor of your choice create a text file (```make.sh``` for example, name is really not important) and save the following script in it and issue ```sh make.sh```. 
 
 ```cmake
 # for UCSC lux cluster using gcc compilers
@@ -123,5 +123,12 @@ CC=mpicc CXX=mpicxx cmake \
 
 make -j4
 ```
+### PETSc 
+The PETSc library optionally used by FeynWann may not be available on some systems. Here is how to install. Download it from [here](https://petsc.org/release/install/download/#recommended-obtain-release-version-with-git). Inside the main directory make a new directory called ```build``` and run the configure command with following options,
+
+```./configure --prefix=/PATH_TO_LIBRARY/petsc-3.18.4/build --with-blaslapack-dir=/PATH_TO_MKL/mkl --with-mpi-dir=/PATH_TO_OPENMPI/openmpi/gcc/64/1.10.7```.
+
+The configure command prints the next command to run, if there is no problem with the configure options. Run those commands in sequence one after the other to complete the PETSc installation. 
+
 
 
