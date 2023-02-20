@@ -130,5 +130,8 @@ The PETSc library optionally used by FeynWann may not be available on some syste
 
 The configure command prints the next command to run, if there is no problem with the configure options. Run those commands in sequence one after the other to complete the PETSc installation. 
 
-
+The above setup is required for first of the two parts of DMD simualtions. This part helps obtain the electronic and phonon structure at the Kohn-Sham level and necessary initializations for the DMD calculations. At this stage it is best to run through an example calculation to obtain the electronic and phonon structure using JDFTx. 
+## GaAs
+We take the example of GaAs for this purpose and first compute its electronic structure. 
+### Electronic band structure
 
