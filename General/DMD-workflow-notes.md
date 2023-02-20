@@ -134,4 +134,7 @@ The above setup is required for first of the two parts of DMD simualtions. This 
 ## GaAs
 We take the example of GaAs for this purpose and first compute its electronic structure. 
 ### Electronic band structure
+![Band](GaAs-band.png)
 
+### Phonon band structure
+![Phonon](phononDispersion.png)
