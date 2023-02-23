@@ -167,7 +167,7 @@ dump-name totalE.$VAR
 dump Init Symmetries
 dump End State
 ```
-These two ```.in``` files specify the structure and other simulations parameters. Along with these two files, you also need to specify either the part to the directory which has pseudopotentials or save the pseudopotential files in the same directory. The pseudpotentials used in this example are available from here to download. 
+These two ```.in``` files specify the structure and other simulations parameters. Along with these two files, you also need to specify either the part to the directory which has pseudopotentials or save the pseudopotential files in the same directory. The pseudpotentials used in this example are available from here, ![Ga](pseudos/Ga_nv3_nocorecorr.upf) and ![As](pseudos/As_nv5_nocorecorr.upf).
 ### Electronic band structure
 ![Band](figs/GaAs-band.png)
 
