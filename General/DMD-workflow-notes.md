@@ -132,7 +132,42 @@ The configure command prints the next command to run, if there is no problem wit
 
 The above setup is required for first of the two parts of DMD simualtions. This part helps obtain the electronic and phonon structure at the Kohn-Sham level and necessary initializations for the DMD calculations. At this stage it is best to run through an example calculation to obtain the electronic and phonon structure using JDFTx. 
 ## GaAs
-We take the example of GaAs for this purpose and first compute its electronic structure. 
+We take the example of GaAs for this purpose and first compute its electronic structure. There are two algorithms to find the converged electronic ground state. We first perform SCF and then use the variational minimize - this helps obtain a fully coverged ground state relatively quickly. For the SCF calculations you need input file - very later convenience - split into two files, ```common.in``` and ```scf.in```. 
+
+```
+# save this in common.in
+
+lattice face-centered Cubic 10.6829
+ion-species Ga_nv3_nocorecorr.upf
+ion-species As_nv5_nocorecorr.upf
+elec-cutoff 17
+
+ion Ga 0.00 0.00 0.00  0
+ion As 0.25 0.25 0.25  0
+
+elec-n-bands 34
+converge-empty-states yes
+spintype spin-orbit
+
+elec-ex-corr mgga-x-scan mgga-c-scan
+```
+
+```
+# save this in scf.in
+
+include common.in
+
+kpoint-folding 16 16 16    #Use a Brillouin zone mesh
+
+initial-state totalE.$VAR
+
+electronic-scf energyDiffThreshold 1e-8
+
+dump-name totalE.$VAR
+dump Init Symmetries
+dump End State
+```
+These two ```.in``` files specify the structure and other simulations parameters. Along with these two files, you also need to specify either the part to the directory which has pseudopotentials or save the pseudopotential files in the same directory. The pseudpotentials used in this example are available from here to download. 
 ### Electronic band structure
 ![Band](GaAs-band.png)
 
