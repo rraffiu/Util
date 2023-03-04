@@ -167,7 +167,28 @@ dump-name totalE.$VAR
 dump Init Symmetries
 dump End State
 ```
-These two ```.in``` files specify the structure and other simulations parameters. Along with these two files, you also need to specify either the part to the directory which has pseudopotentials or save the pseudopotential files in the same directory. The pseudpotentials used in this example are available from here, ![Ga](pseudos/Ga_nv3_nocorecorr.upf) and ![As](pseudos/As_nv5_nocorecorr.upf).
+These two ```.in``` files specify the structure and other simulations parameters. Along with these two files, you also need to specify either the path to the directory which has pseudopotentials or save the pseudopotential files in the same directory. The pseudpotentials used in this example are available from here, ![Ga](pseudos/Ga_nv3_nocorecorr.upf) and ![As](pseudos/As_nv5_nocorecorr.upf). Here is typical script to run the above SCF calculation with JDFTx. 
+```
+#!/bin/bash
+#SBATCH -p cpuq
+#SBATCH --account=cpuq
+#SBATCH -N 8
+#SBATCH -t 24:00:00
+#SBATCH --ntasks-per-node=8
+#SBATCH -J jdftx
+
+module load openmpi/gcc/64/1.10.7
+
+pwd; hostname; date
+
+echo "Running program on $SLURM_JOB_NUM_NODES nodes with $SLURM_NTASKS total tasks"
+echo  "with each node getting $SLURM_NTASKS_PER_NODE tasks."
+
+MPICMD="mpirun -np $SLURM_NTASKS"
+DIRJ="/PATH_TO_EXECUTABLE/JDFTx/jdftx-1.7.0/build"
+${MPICMD} ${DIRJ}/jdftx -i scf.in > scf.out
+```
+
 ### Electronic band structure
 ![Bands](figs/GaAs-band-4x4x4.png)
 
