@@ -222,7 +222,7 @@ kpoint 0.375 0.750 0.375     K
 ```
 Now to generate k-points along this path run the following, 
 
-```/PATH_TO_EXECUTABLE/JDFTx/jdftx-1.7.0/jdftx/scripts/bandstructKpoints bandstruct.kpoints.in 0.05 bandstruct````
+```/PATH_TO_EXECUTABLE/JDFTx/jdftx-1.7.0/jdftx/scripts/bandstructKpoints bandstruct.kpoints.in 0.05 bandstruct```
 
 
 
