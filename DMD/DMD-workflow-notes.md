@@ -469,7 +469,7 @@ This completes the first stage of the calculations. The next stage is the real t
 is the Lindblad inialization and the second one is DMD run. **It import to note that at the moment the lindblad inialization code does not run on 
 lux cluster.**
 
-Using the followig input for Lindblad inialization with all the earlier results saved in the directory ```Wannier``` saved relative to this input file. 
+Using the followig input for Lindblad inialization with all the earlier results saved in the sub-directory ```Wannier``` saved relative to this input file. 
 
 ```
 scissor         0.424240
@@ -510,6 +510,82 @@ DIRF="/export/data/share/jxu/jdftx_codes/jdftx-202209/build-FeynWann"
 
 ${MPICMD} ${DIRF}/lindbladInit_for-DMD-4.5.6/init_for-DMD -i lindbladInit.in > lindbladInit.out
 ```
+The inialization code will save all its output in a sub-directory named, ```ldbd_data```. 
+And now one can run the final step of the calculation, which is the DMD. The DMD input is, 
 
+Save the following in the file ```param.in```. 
+
+```
+#DEBUG = 1
+restart = 0
+#compute_tau_only = 1
+code = jdftx
+alg_linearize = 1
+print_along_kpath = 1
+kpath_start1 = 0,0,0
+kpath_end1 = 0.375,0.75,0.375
+alg_only_eimp = 0
+alg_eph_sepr_eh = 1
+alg_eph_need_elec = 1
+alg_eph_need_hole = 0
+alg_scatt = lindblad
+alg_set_scv_zero = 1
+alg_Pin_is_sparse = 0
+alg_sparseP = 0
+#alg_ddmdteq = 1
+
+#pumpMode = coherent
+#pumpA0 = 0.002
+pumpPoltype = LC
+pumpE = 1.44
+pumpTau = 100
+probePoltype1 = LC
+probePoltype2 = RC
+probeEmin = 0.8
+probeEmax = 2.0
+probeDE = 0.005
+probeTau = 100
+
+Bzpert = 0.1
+
+t0 = 0
+tend = 1e5
+tstep = 100
+tstep_pump = 10
+freq_measure_ene = 10
+de_measure = 5e-4
+degauss_measure = 2e-3
+
+#alg_ode_method = euler
+#ode_hstart = 0.01
+#ode_hmin = 0.01
+#ode_epsabs = 1e-04
+
+mu = 1.4
+carrier_density = 2e16
+
+#alg_phenom_relax = 1
+tau_phenom = 0.11
+bStart_tau = 0
+bEnd_tau = 4
+
+scrMode = medium
+srcFormula = RPA
+dynamic_screening = static
+epsilon_background = 12.9
+
+impurity_density = 2e16
+impMode = model_ionized
+#partial_ionized = 1
+E_impurity = 1.43
+Z_impurity = 1
+g_impurity = 2
+freq_update_eimp_model = 10
+
+eeMode = Pee_update
+#eeMode = Pee_fixed_at_eq
+freq_update_ee_model = 10
+
+```
 
 
