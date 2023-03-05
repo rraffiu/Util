@@ -265,7 +265,66 @@ The above gnuplot scritp will make a figure that looks like the one shown below,
 
 ### Phonon Dispersion
 Similarly the phonon dispersion for the same system can be calculated. Although one needs a bigger simulation cell for 
-a proper phonon calculation. A supercell made of 4x4x4 unit cells is reasonable cell for this system. 
+a proper phonon calculation. A supercell made of 4x4x4 unit cells is reasonable cell for this system. Use the following 
+jdftx input to calculate force matrix, 
+
+```
+include totalE.in          #Full specification of the unit cell calculation
+initial-state totalE.$VAR  #Start from converged unit cell state
+dump-only                  #Don't reconverge unit cell state
+
+phonon supercell 4 4 4     #Calculate force matrix in a 4x4x4 supercell
+```
+
+After the above calculation, the phonon dispersion can be caculated using the following python scrip, 
+
+```python
+# save the following to PhononDispersion.py:
+import numpy as np
+from scipy.interpolate import interp1d
+
+#Read the phonon cell map and force matrix:
+cellMap = np.loadtxt("phonon.phononCellMap")[:,0:3].astype(np.int)
+forceMatrix = np.fromfile("phonon.phononOmegaSq", dtype=np.float64)
+nCells = cellMap.shape[0]
+nModes = int(np.sqrt(forceMatrix.shape[0] / nCells))
+#Read the k-point path:
+kpointsIn = np.loadtxt('bandstruct.kpoints', skiprows=2, usecols=(1,2,3))
+nKin = kpointsIn.shape[0]
+#--- Interpolate to a 10x finer k-point path:
+nInterp = 10
+xIn = np.arange(nKin)
+x = (1./nInterp)*np.arange(1+nInterp*(nKin-1)) #same range with 10x density
+kpoints = interp1d(xIn, kpointsIn, axis=0)(x)
+nK = kpoints.shape[0]
+
+#Calculate dispersion from force matrix:
+#--- Fourier transform from real to k space:
+forceMatrixTilde = np.tensordot(np.exp((2j*np.pi)*np.dot(kpoints,cellMap.T)), forceMatrix, axes=1)
+#--- Diagonalize:
+omegaSq, normalModes = np.linalg.eigh(forceMatrixTilde)
+
+#Plot phonon dispersion:
+import matplotlib.pyplot as plt
+meV = 1e-3/27.2114
+plt.plot(np.sqrt(omegaSq)/meV)
+plt.xlim([0,nK-1])
+plt.ylim([0,None])
+plt.ylabel("Phonon energy [meV]")
+#--- If available, extract k-point labels from bandstruct.plot:
+try:
+    import subprocess as sp
+    kpathLabels = sp.check_output(['awk', '/set xtics/ {print}', 'bandstruct.plot']).split()
+    kpathLabelText = [ label.split('"')[1] for label in kpathLabels[3:-2:2] ]
+    kpathLabelPos = [ nInterp*int(pos.split(',')[0]) for pos in kpathLabels[4:-1:2] ]
+    plt.xticks(kpathLabelPos, kpathLabelText)
+except:
+    print ('Warning: could not extract labels from bandstruct.plot')
+#plt.xticks ( "Gamma" 0,  "X" 71,  "W" 107,  "L" 143,  "Gamma" 230,  "K" 322 )
+plt.xticks ([nInterp*0,nInterp*142,nInterp*213,nInterp*284,nInterp*458, nInterp*642],[r"$\Gamma$", "X", "W", "L", r"$\Gamma$", "K"])
+plt.savefig("phononDispersion-4x4x4.png", format="png", bbox_inches="tight")
+plt.show()
+```
 
 
 ![Phonon](figs/phononDispersion.png)
