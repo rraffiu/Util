@@ -325,6 +325,8 @@ plt.xticks ([nInterp*0,nInterp*142,nInterp*213,nInterp*284,nInterp*458, nInterp*
 plt.savefig("phononDispersion-4x4x4.png", format="png", bbox_inches="tight")
 plt.show()
 ```
-
+The above script will produce a graph that looks like the one below. 
 
 ![Phonon](figs/phononDispersion.png)
+
+
