@@ -676,4 +676,8 @@ else:
 np.savetxt("tau_t.dat",np.transpose([t_data[0:nt-1],t1]))
 ```
 
+And finally here a plot of the time resolved spin lifetime, 
+
+
+
 
