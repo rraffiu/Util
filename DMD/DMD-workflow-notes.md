@@ -392,3 +392,8 @@ wannier-center Gaussian   0.000263   0.058292   0.442630 1.7 sUp
 wannier-center Gaussian   0.000263   0.058292   0.442630 1.7 sDn
 ```
 The initial guess for wannier functions generated using python script has been appended to the above input file. 
+Now do the wannier calculation by changing the executable in the batch script:
+
+```${MPICMD} ${DIRJ}/wannier -i wannier.in > wannier.out```.
+
+
