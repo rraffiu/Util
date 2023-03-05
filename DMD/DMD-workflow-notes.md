@@ -461,4 +461,6 @@ eV = 1/27.2114   #in Hartrees
 plot for [i=1:nCols] "bandstruct.eigenvals" binary format=formatString u 0:((column(i) - VBM)/eV) every 14 w p lc rgb "black", \
      for [i=1:10] "wannier.eigenvals" u (0.1*$0):((column(i)-VBM)/eV) w l lw 2
 ```
+The above script will produce a figure similar to the following, 
+
 
