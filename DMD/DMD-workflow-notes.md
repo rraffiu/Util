@@ -207,7 +207,22 @@ And repeat the calculations by just changing this line in the above batch script
 
 ```${MPICMD} ${DIRJ}/jdftx -i totalE.in > totalE.out```
 
-Once this calculation has converged, the electronic band structure can be calculated. 
+Once this calculation has converged, the electronic band structure can be calculated. Before doing the 
+electronic band structure calculations we must list the high symmetry points in the Brillouin zone to decide
+the path along which we want to calculate the band structure. Save the following high symmetry points for GaAs in a file, for
+example, ```bandstruct.kpoints.in```, 
+
+```
+kpoint 0.000 0.000 0.000     Gamma
+kpoint 0.000 0.500 0.500     X
+kpoint 0.250 0.750 0.500     W
+kpoint 0.500 0.500 0.500     L
+kpoint 0.000 0.000 0.000     Gamma
+kpoint 0.375 0.750 0.375     K
+```
+
+
+
 
 
 
