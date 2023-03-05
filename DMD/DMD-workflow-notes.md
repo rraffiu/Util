@@ -243,7 +243,7 @@ fix-electron-potential totalE.$VAR
 Once this is done, you can open the ```bandstruct.plot``` file to modify it a little to make a nice looking band structure plot, 
 here is the example, 
 
-```
+```gnuplot
 #!/usr/bin/gnuplot -persist
 set term pngcairo
 set output "GaAs-band.png"
