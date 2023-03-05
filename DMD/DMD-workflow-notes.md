@@ -469,7 +469,7 @@ This completes the first stage of the calculations. The next stage is the real t
 is the Lindblad inialization and the second one is DMD run. **It import to note that at the moment the lindblad inialization code does not run on 
 lux cluster.**
 
-Using the followig input for Lindblad inialization with all the earlier results save in the directory ```Wannier``` saved relative to this input file. 
+Using the followig input for Lindblad inialization with all the earlier results saved in the directory ```Wannier``` saved relative to this input file. 
 
 ```
 scissor         0.424240
@@ -489,4 +489,27 @@ ePhDelta        0.005
 nEphDelta       1000
 writeU          1
 ```
+
+Then change the executable in the batch script to run this input. Here is a batch script to run this on kairay cluster, 
+
+```
+#!/bin/bash
+##SBATCH -p debug
+#SBATCH -N 16
+#SBATCH -t 99:00:00
+#SBATCH --ntasks-per-node=16
+#SBATCH -J lindbladInit
+
+
+module use /home/jxu153/modulefiles
+module load myopenmpi-4.0.2_gcc-4.8.5
+
+MPICMD="mpirun -np $SLURM_NTASKS"
+DIRJ="/export/data/share/jxu/jdftx_codes/jdftx-202209/build"
+DIRF="/export/data/share/jxu/jdftx_codes/jdftx-202209/build-FeynWann"
+
+${MPICMD} ${DIRF}/lindbladInit_for-DMD-4.5.6/init_for-DMD -i lindbladInit.in > lindbladInit.out
+```
+
+
 
