@@ -188,6 +188,28 @@ MPICMD="mpirun -np $SLURM_NTASKS"
 DIRJ="/PATH_TO_EXECUTABLE/JDFTx/jdftx-1.7.0/build"
 ${MPICMD} ${DIRJ}/jdftx -i scf.in > scf.out
 ```
+After doing the SCF convergence, we repeat the ground state covergence with a different, slower but more reliable, algorithm called ```electronic minimize``` to do the final convergence. It uses the SCF converged state and further converges it. Here is the input for this step,
+
+```
+# save the following in totalE.in
+include common.in
+
+kpoint-folding 24 24 24    #Use a Brillouin zone mesh
+
+initial-state totalE.$VAR
+
+electronic-minimize energyDiffThreshold 1e-11
+
+dump-name totalE.$VAR
+dump End State EigStats BandEigs ElecDensity Vscloc
+```
+And repeat the calculations by just changing this line in the above batch script,
+
+```${MPICMD} ${DIRJ}/jdftx -i totalE.in > totalE.out```
+
+Once this calculation has converged, the electronic band structure can be calculated. 
+
+
 
 ### Electronic band structure
 ![Bands](figs/GaAs-band-4x4x4.png)
