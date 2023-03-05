@@ -263,5 +263,9 @@ The above gnuplot scritp will make a figure that looks like the one shown below,
 ![Bands](figs/GaAs-band-4x4x4.png)
 
 
-### Phonon band structure
+### Phonon Dispersion
+Similarly the phonon dispersion for the same system can be calculated. Although one needs a bigger simulation cell for 
+a proper phonon calculation. A supercell made of 4x4x4 unit cells is reasonable cell for this system. 
+
+
 ![Phonon](figs/phononDispersion.png)
