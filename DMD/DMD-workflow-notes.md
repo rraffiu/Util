@@ -329,4 +329,6 @@ The above script will produce a graph that looks like the one below.
 
 ![Phonon](figs/phononDispersion.png)
 
+### Wannier Band Structure
 
+In the next stage we calculate maximally localized wannier functions (MLWFs). 
