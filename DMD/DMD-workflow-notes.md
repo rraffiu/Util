@@ -332,7 +332,30 @@ The above script will produce a graph that looks like the one below.
 ### Wannier Band Structure
 
 In the next stage we calculate maximally localized wannier functions (MLWFs). The wannier calculation uses two files (quantities) 
-```totalE.Zeff``` containing **Born effective charges** and ```totalE.epsInf``` containing ***optical dielectric tensor*** which need to be computed externally, for example, using Quantum Espresso code. Once these quantities have been computed externally and saved in the same directory, the following 
+```totalE.Zeff``` containing **Born effective charges** and ```totalE.epsInf``` containing ***optical dielectric tensor*** which need to be computed externally, for example, using Quantum Espresso code. Another important piece of input for wannier calculation is the initial guess for the wannier centers. There is no unique way to do obtain this guess. One way of doing it using randomly generated wannier centers. Here is python script which randomly generates wannier functions,
+
+```python
+#!/usr/bin/env python
+import os
+import random
+
+random.seed()
+
+f = open("rand_wann-centers.dat","w")
+
+#for i in range(7):
+#    for spin in ("sUp", "sDn"):
+#        f.write("wannier-center Gaussian %10.6f %10.6f %10.6f 2.0 %s \n" %
+#                (random.random()-0.5, random.random()-0.5, random.random()-0.5, spin) )
+for i in range(8):
+  x=random.random()-0.5
+  y=random.random()-0.5
+  z=random.random()-0.5
+  f.write("wannier-center Gaussian %10.6f %10.6f %10.6f 1.7 %s \n" % (x,y,z,"sUp"))
+  f.write("wannier-center Gaussian %10.6f %10.6f %10.6f 1.7 %s \n" % (x,y,z,"sDn"))
+````
+
+Once these quantities have been computed externally and saved in the same directory, the following 
 jdftx input can be used for wannier calculations,
 
 
