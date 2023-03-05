@@ -331,4 +331,8 @@ The above script will produce a graph that looks like the one below.
 
 ### Wannier Band Structure
 
-In the next stage we calculate maximally localized wannier functions (MLWFs). 
+In the next stage we calculate maximally localized wannier functions (MLWFs). The wannier calculation uses two files (quantities) 
+```totalE.Zeff``` containing **Born effective charges** and ```totalE.epsInf``` containing ***optical dielectric tensor*** which need to be computed externally, for example, using Quantum Espresso code. Once these quantities have been computed externally and saved in the same directory, the following 
+jdftx input can be used for wannier calculations,
+
+
