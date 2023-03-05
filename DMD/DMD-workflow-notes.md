@@ -266,7 +266,7 @@ The above gnuplot scritp will make a figure that looks like the one shown below,
 ### Phonon Dispersion
 Similarly the phonon dispersion for the same system can be calculated. Although one needs a bigger simulation cell for 
 a proper phonon calculation. A supercell made of 4x4x4 unit cells is reasonable cell for this system. Use the following 
-jdftx input to calculate force matrix, 
+jdftx input to calculate force matrix. Remember to change the executable in the batch script: ```${MPICMD} ${DIRJ}/phonon -i phonon.in > phonon.out```.
 
 ```
 include totalE.in          #Full specification of the unit cell calculation
