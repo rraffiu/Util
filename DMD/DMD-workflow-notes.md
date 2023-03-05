@@ -222,7 +222,22 @@ kpoint 0.375 0.750 0.375     K
 ```
 Now to generate k-points along this path run the following, 
 
-```/PATH_TO_EXECUTABLE/JDFTx/jdftx-1.7.0/jdftx/scripts/bandstructKpoints bandstruct.kpoints.in 0.05 bandstruct```
+```/PATH_TO_EXECUTABLE/JDFTx/jdftx-1.7.0/jdftx/scripts/bandstructKpoints bandstruct.kpoints.in 0.01 bandstruct```
+
+This script will generate two files, ```bandstruct.kpoints``` and ```bandstruct.plot```. The first file has the k-points 
+aloing the specified path and the second file has the script to plot the calculated bands. 
+Now you can use the following input to run jdftx for bandstructure calculations,
+
+```
+include common.in
+include bandstruct.kpoints
+
+dump-name bandstruct.$VAR
+dump End BandEigs Spin
+
+electronic-minimize energyDiffThreshold 1e-11
+fix-electron-potential totalE.$VAR
+```
 
 
 
