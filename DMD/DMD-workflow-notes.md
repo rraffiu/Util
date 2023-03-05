@@ -465,5 +465,28 @@ The above script will produce a figure similar to the following,
 
 ![Wannier](figs/GaAs-DFTvsWannier.png)
     
+This completes the first stage of the calculations. The next stage is the real time density matrix dynamics (DMD). There are two parts to this last stage, first 
+is the Lindblad inialization and the second one is DMD run. **It import to note that at the moment the lindblad inialization code does not run on 
+lux cluster.**
 
+Using the followig input for Lindblad inialization with all the earlier results save in the directory ```Wannier``` saved relative to this input file. 
+
+```
+scissor         0.424240
+
+NkMult          8
+#NkzMult        1
+dmuMin          1.43
+dmuMax          1.43
+Tmax            300
+pumpOmegaMax    1.47
+pumpTau         50
+probeOmegaMax   2.0
+
+ePhMode         DiagK
+ePhOnlyElec     1
+ePhDelta        0.005
+nEphDelta       1000
+writeU          1
+```
 
