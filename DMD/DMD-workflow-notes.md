@@ -463,4 +463,7 @@ plot for [i=1:nCols] "bandstruct.eigenvals" binary format=formatString u 0:((col
 ```
 The above script will produce a figure similar to the following, 
 
+![Wannier](figs/GaAs-DFTvsWannier.png)
+    
+
 
