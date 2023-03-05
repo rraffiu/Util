@@ -440,5 +440,25 @@ Ek,Vk = np.linalg.eigh(Hk)
 #--- Save:
 np.savetxt("wannier.eigenvals", Ek)
 ```
+And finally use the following gnuplot script to plot the wannier bands and the DFT bands together for comparison, 
 
+```gnuplot
+#!/usr/bin/gnuplot -persist
+set term pngcairo
+set output "GaAs-DFTvsWannier.png"
+
+set xtics ( "Gamma" 0,  "X" 142,  "W" 213,  "L" 284,  "Gamma" 458,  "K" 642 )
+unset key
+nRows = real(system("awk '$1==\"kpoint\" {nRows++} END {print nRows}' bandstruct.kpoints"))
+nCols = real(system("wc -c < bandstruct.eigenvals")) / (8*nRows)
+formatString = system(sprintf("echo '' | awk 'END { str=\"\"; for(i=0; i<%d; i++) str = str \"%%\" \"lf\"; print str}'", nCols))
+set xzeroaxis               #Add dotted line at zero energy
+set ylabel "E - VBM [eV]"   #Add y-axis label
+set yrange [*:10]           #Truncate bands very far from VBM
+
+VBM = +0.180239  #HOMO from totalE.eigStats
+eV = 1/27.2114   #in Hartrees
+plot for [i=1:nCols] "bandstruct.eigenvals" binary format=formatString u 0:((column(i) - VBM)/eV) every 14 w p lc rgb "black", \
+     for [i=1:10] "wannier.eigenvals" u (0.1*$0):((column(i)-VBM)/eV) w l lw 2
+```
 
