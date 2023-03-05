@@ -355,6 +355,7 @@ Once these quantities have been computed externally and saved in the same direct
 jdftx input can be used for wannier calculations,
 
 ```
+# save the following to wannier.in
 include totalE.in
 
 wannier \
@@ -390,4 +391,4 @@ wannier-center Gaussian  -0.363296  -0.067796  -0.166150 1.7 sDn
 wannier-center Gaussian   0.000263   0.058292   0.442630 1.7 sUp
 wannier-center Gaussian   0.000263   0.058292   0.442630 1.7 sDn
 ```
-
+The initial guess for wannier functions generated using python script has been appended to the above input file. 
