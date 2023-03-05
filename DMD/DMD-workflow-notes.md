@@ -132,6 +132,7 @@ The configure command prints the next command to run, if there is no problem wit
 
 The above setup is required for first of the two parts of DMD simualtions. This part helps obtain the electronic and phonon structure at the Kohn-Sham level and necessary initializations for the DMD calculations. At this stage it is best to run through an example calculation to obtain the electronic and phonon structure using JDFTx. 
 ## GaAs
+### Electronic band structure
 We take the example of GaAs for this purpose and first compute its electronic structure. There are two algorithms to find the converged electronic ground state. We first perform SCF and then use the variational minimize - this helps obtain a fully coverged ground state relatively quickly. For the SCF calculations you need input file - very later convenience - split into two files, ```common.in``` and ```scf.in```. 
 
 ```
@@ -229,6 +230,7 @@ aloing the specified path and the second file has the script to plot the calcula
 Now you can use the following input to run jdftx for bandstructure calculations,
 
 ```
+# Save the following in bandstruct.in
 include common.in
 include bandstruct.kpoints
 
@@ -238,12 +240,26 @@ dump End BandEigs Spin
 electronic-minimize energyDiffThreshold 1e-11
 fix-electron-potential totalE.$VAR
 ```
+Once this is done, you can open the ```bandstruct.plot``` file to modify it a little to make a nice looking band structure plot, 
+here is the example, 
 
+```
+#!/usr/bin/gnuplot -persist
+set term pngcairo
+set output "GaAs-band.png"
 
+set xtics ( "Gamma" 0,  "X" 142,  "W" 213,  "L" 284,  "Gamma" 458,  "K" 642 )
+unset key
+nRows = real(system("awk '$1==\"kpoint\" {nRows++} END {print nRows}' bandstruct.kpoints"))
+nCols = real(system("wc -c < bandstruct.eigenvals")) / (8*nRows)
+formatString = system(sprintf("echo '' | awk 'END { str=\"\"; for(i=0; i<%d; i++) str = str \"%%\" \"lf\"; print str}'", nCols))
+set xzeroaxis               #Add dotted line at zero energy
+set ylabel "E - VBM [eV]"   #Add y-axis label
+set yrange [*:10]           #Truncate bands very far from VBM
 
-
-
-### Electronic band structure
+plot for [i=1:nCols] "bandstruct.eigenvals" binary format=formatString u 0:((column(i) - 0.180239)*27.21) w l lw 2
+```
+The above gnuplot scritp will make a figure that looks like the one shown below, 
 ![Bands](figs/GaAs-band-4x4x4.png)
 
 
