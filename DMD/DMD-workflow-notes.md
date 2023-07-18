@@ -130,6 +130,14 @@ The PETSc library optionally used by FeynWann may not be available on some syste
 
 The configure command prints the next command to run, if there is no problem with the configure options. Run those commands in sequence one after the other to complete the PETSc installation. 
 
+### GSL
+GNU Scientific Library provides a wide range of mathematical routines. Here is how to install it. 
+Inside the main directory make a new diroctory called ```build``` and run the following command,
+
+```./configure --prefix=/software/groups/ping_group/shared/libs/gsl-2.7.1/build```
+
+Then issue ```make``` and ```make install``` in sequence. 
+
 The above setup is required for first of the two parts of DMD simualtions. This part helps obtain the electronic and phonon structure at the Kohn-Sham level and necessary initializations for the DMD calculations. At this stage it is best to run through an example calculation to obtain the electronic and phonon structure using JDFTx. 
 ## GaAs
 ### Electronic band structure
