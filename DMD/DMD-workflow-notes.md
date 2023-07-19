@@ -97,6 +97,10 @@ make install
 **Note 1:** The libxc has some code which requires to be compiled with C99 standard, that is why without the compiler flag ```-std=gnu99``` libxc would not compile.   
 **Note 2:** JDFTx is built both as an executable and a library (shared object). That is why it is required that libxc is built as a shared object as well otherwise you will have problem compiling JDFTx with libxc. That is why the configure option ```--enable-shared``` is very important.  
 
+### FFTW3
+
+```./configure --enable-shared --enable-mpi --enable-threads --prefix=/software/groups/ping_group/shared/libs/fftw-3.3.10/build```
+
 ### FeynWann
 
 FeynWann is another code which works with JDFTx (and needs compiled JDFTx to compile) to perform important energy calculations and inialiazations for
