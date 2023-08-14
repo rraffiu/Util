@@ -128,7 +128,7 @@ CC=mpicc CXX=mpicxx cmake \
 make -j4
 ```
 ### PETSc 
-**Note** Download a release tatball instead of git clone as it may lead to problems with pre-generated Fortran-stubs.
+**Download a release tatball instead of git clone as it may lead to problems with pre-generated Fortran-stubs.**
 The PETSc library optionally used by FeynWann may not be available on some systems. Here is how to install. Download it from [here](https://petsc.org/release/install/download/#recommended-obtain-release-version-with-git). Inside the main directory make a new directory called ```build``` and run the configure command with following options,
 
 ```./configure --prefix=/PATH_TO_LIBRARY/petsc-3.18.4/build --with-blaslapack-dir=/PATH_TO_MKL/mkl --with-mpi-dir=/PATH_TO_OPENMPI/openmpi/gcc/64/1.10.7```.
