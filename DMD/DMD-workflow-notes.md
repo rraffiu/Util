@@ -171,7 +171,7 @@ elec-ex-corr mgga-x-scan mgga-c-scan
 
 include common.in
 
-kpoint-folding 16 16 16    #Use a Brillouin zone mesh
+kpoint-folding 24 24 24    #Use a Brillouin zone mesh
 
 initial-state totalE.$VAR
 
