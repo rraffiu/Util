@@ -10,3 +10,7 @@
     pasting the line into a terminal and adding a "-E". For example try
     changing ```mpicc -DFOO -DBAR -c foo.c``` into
    ```mpicc -DFOO -DBAR -E foo.c > foo.i``` and look at the ```foo.i``` file.
+
+4. Execute last three (n) commands repeately. Press the up-arrow key three (n) times, the press ```Cntrl o```.
+   This is execute one command and bring the next one up. Repeat as many times as needed. 
+
