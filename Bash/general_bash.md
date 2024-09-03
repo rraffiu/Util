@@ -12,5 +12,7 @@
    ```mpicc -DFOO -DBAR -E foo.c > foo.i``` and look at the ```foo.i``` file.
 
 4. Execute last three (n) commands repeately. Press the up-arrow key three (n) times, the press ```Cntrl o```.
-   This is execute one command and bring the next one up. Repeat as many times as needed. 
+   This is execute one command and bring the next one up. Repeat as many times as needed.
+
+5. To grep from sorted files like 'OSZICAR' in vasp, ```ls OSZICAR.* | sort -t. -k2,2n | xargs grep "T=" > Etot_T_vs_time.txt ```.
 
