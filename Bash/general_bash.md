@@ -18,3 +18,7 @@
 
    ```ls OSZICAR.* | sort -t. -k2,2n | xargs grep "T=" | awk '{print $2, $4, $6, $8, $10, $12}' > Etot_T_vs_time.txt ```.
 
+6. How to find the oldest file in a directory or its subdirectories,
+
+   ```find /path/to/directory -type f -printf '%T+ %p\n' | sort | head -n 1```.
+
